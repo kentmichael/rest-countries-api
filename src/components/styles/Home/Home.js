@@ -1,3 +1,3 @@
-import { Main } from "./Home.styles"
+import { Main, H1, H2 } from "./Home.styles"
 
-export { Main }
+export { Main, H1, H2 }

@@ -1,4 +1,5 @@
 import React, { useDeferredValue } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Div,
   Section,
@@ -15,6 +16,7 @@ const Card = (props) => {
   const { countryList, filterResult, queryResult } = useDeferredValue(
     props.state
   )
+  const navigate = useNavigate()
 
   const list = queryResult
     ? queryResult
@@ -26,7 +28,10 @@ const Card = (props) => {
     <Div>
       {list.map(({ alpha2Code, name, flag, population, region, capital }) => {
         return (
-          <Section key={alpha2Code}>
+          <Section
+            key={alpha2Code}
+            onClick={() => navigate(`/country-details/${name}`)}
+          >
             <Div1>
               <Image src={flag} alt={`${name} flag`} />
             </Div1>

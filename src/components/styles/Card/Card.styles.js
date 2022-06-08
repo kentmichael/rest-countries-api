@@ -5,6 +5,7 @@ export const Div = styled.div`
   gap: 5rem;
   max-width: 80rem;
   margin-inline: auto;
+  margin-bottom: 8rem;
   padding-inline: 3rem;
 
   @media (min-width: 40em) {
@@ -15,6 +16,7 @@ export const Div = styled.div`
   @media (min-width: 71.88em) {
     grid-template-columns: repeat(4, 1fr);
     gap: 4.63rem;
+    margin-bottom: 2.75rem;
     padding-inline: 0;
   }
 `

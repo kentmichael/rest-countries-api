@@ -22,11 +22,32 @@ const Form = (props) => {
     dispatch({
       type: event.target.name,
       payload: event.target.value,
+      data:
+        event.target.name === "filterOption"
+          ? filterList(event.target.value)
+          : searchList(event.target.value),
     })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
+  }
+
+  const filterList = (keyword) => {
+    if (keyword === "all") return ""
+
+    return state.countryList.filter(
+      (countryObj) => countryObj.region.toUpperCase() === keyword.toUpperCase()
+    )
+  }
+
+  const searchList = (query) => {
+    if (!query) return ""
+    const list = state.filterResult ? state.filterResult : state.countryList
+
+    return list.filter((countryObj) =>
+      countryObj.name.toUpperCase().includes(query.toUpperCase())
+    )
   }
 
   return (
@@ -37,22 +58,25 @@ const Form = (props) => {
           type="search"
           ref={inputRef}
           name="queryString"
-          value={state.query}
+          value={state.queryString}
           onChange={handleOnChange}
           placeholder="Search for a country..."
         />
       </Label>
       <Label2>
         <Select
-          value={state.filter}
-          name="filterString"
+          value={state.filterOption}
+          name="filterOption"
           onChange={handleOnChange}
         >
-          <Option value="all" hidden={state.filter === "all" ? true : false}>
+          <Option
+            value="all"
+            hidden={state.filterOption === "all" ? true : false}
+          >
             Filter by Region
           </Option>
           <Option value="africa">Africa</Option>
-          <Option value="america">America</Option>
+          <Option value="americas">America</Option>
           <Option value="asia">Asia</Option>
           <Option value="europe">Europe</Option>
           <Option value="oceania">Oceania</Option>

@@ -1,12 +1,14 @@
-import React, { useEffect, useReducer } from "react"
+import React, { useEffect, useReducer, useState } from "react"
 import axios from "axios"
 import Form from "./Form"
 import { Main } from "./styles/Home/Home"
 import Card from "./Card"
 
 const initialState = {
-  query: "",
-  filter: "all",
+  queryString: "",
+  queryResult: "",
+  filterOption: "all",
+  filterResult: "",
   countryList: [],
 }
 
@@ -15,17 +17,20 @@ const reducer = (state, action) => {
     case "queryString":
       return {
         ...state,
-        query: action.payload,
+        queryString: action.payload,
+        queryResult: action.data,
       }
-    case "filterString":
+    case "filterOption":
       return {
         ...state,
-        filter: action.payload,
+        filterOption: action.payload,
+        filterResult: action.data,
+        queryResult: "",
       }
     case "countryData":
       return {
         ...state,
-        countryList: action.payload,
+        countryList: action.data,
       }
     default:
       return state
@@ -35,11 +40,13 @@ const reducer = (state, action) => {
 const Home = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  console.log(state)
+
   useEffect(() => {
     axios
       .get("https://restcountries.com/v2/all")
       .then((response) => {
-        dispatch({ type: "countryData", payload: response.data })
+        dispatch({ type: "countryData", data: response.data })
       })
       .catch((error) => {
         console.log(error)
@@ -56,4 +63,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default React.memo(Home)

@@ -23,7 +23,7 @@ const theme = {
 }
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
 
   const toggleMode = () => {
     setDarkMode(!darkMode)

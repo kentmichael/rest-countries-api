@@ -32,10 +32,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
+    background-color: var(--theme-bg);
     font-family: var(--font-family);
-    // Temporary MODE - true (light)
-    color: ${(props) =>
-      true ? props.theme.light.text : props.theme.dark.text};
+    color: var(--theme-text);
   }
 
   h1,

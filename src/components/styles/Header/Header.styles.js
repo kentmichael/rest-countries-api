@@ -2,9 +2,11 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 export const PageHeader = styled.header`
+  margin-bottom: 2.88rem;
   padding-block: 4.06rem;
   padding-inline: 2rem;
-  background-color: var(--theme-bg);
+  background-color: var(--theme-element);
+  box-shadow: 0 0.1rem 0.5rem hsla(0, 0%, 20%, 0.2);
 
   @media (min-width: 87.5em) {
     padding-block: 1.88rem;
@@ -40,8 +42,9 @@ export const Button = styled.button`
   padding: 0;
   border: none;
   background-color: transparent;
+  font-family: var(--font-family);
   font-size: 1.19rem;
-  font-weight: 300;
+  font-weight: 600;
   color: var(--theme-text);
   cursor: pointer;
 

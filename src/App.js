@@ -98,9 +98,9 @@ function App() {
         <Header mode={{ darkMode, toggleMode }} />
         <AppContext.Provider value={{ state, dispatch }}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="rest-countries-api/" element={<Home />} />
             <Route
-              path="country-details/:country"
+              path="rest-countries-api/country-details/:country"
               element={<CountryDetails />}
             />
             <Route path="*" element={<NoMatch />} />

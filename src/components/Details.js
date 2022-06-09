@@ -39,7 +39,7 @@ const Details = (props) => {
   const navigate = useNavigate()
 
   const viewBorderCountry = (countryName) => {
-    navigate(`/country-details/${countryName}`)
+    navigate(`/rest-countries-api/country-details/${countryName}`)
   }
 
   const filteredBorders =

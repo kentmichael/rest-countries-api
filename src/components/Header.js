@@ -7,7 +7,7 @@ const Header = (props) => {
   return (
     <PageHeader>
       <Div>
-        <LogoLink to="/">Where in the world?</LogoLink>
+        <LogoLink to="rest-countries-api/">Where in the world?</LogoLink>
         <Button onClick={toggleMode}>
           <Span
             className={`fa-${darkMode ? "regular" : "solid"} fa-moon`}

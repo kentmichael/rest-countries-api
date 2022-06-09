@@ -1,83 +1,19 @@
-import React, { useEffect, useReducer, useTransition } from "react"
-import axios from "axios"
+import React, { useContext } from "react"
 import Form from "./Form"
-import { Main, H1, H2 } from "./styles/Home/Home"
+import { Main } from "./styles/Home/Home"
 import Card from "./Card"
-
-const initialState = {
-  isLoading: true,
-  hasError: false,
-  errorMessage: "",
-  queryString: "",
-  queryResult: "",
-  filterOption: "all",
-  filterResult: "",
-  countryList: [],
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "queryString":
-      return {
-        ...state,
-        queryString: action.payload,
-        queryResult: action.data,
-      }
-    case "filterOption":
-      return {
-        ...state,
-        filterOption: action.payload,
-        filterResult: action.data,
-        queryResult: "",
-      }
-    case "FETCH_SUCCESS":
-      return {
-        ...state,
-        countryList: action.data,
-        isLoading: false,
-        hasError: false,
-      }
-    case "FETCH_ERROR":
-      return {
-        ...state,
-        isLoading: false,
-        hasError: true,
-        errorMessage: action.payload,
-      }
-    default:
-      return state
-  }
-}
+import { AppContext } from "../App"
+import Error from "./Error"
 
 const Home = () => {
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const [isPending, startTransition] = useTransition()
-
-  useEffect(() => {
-    axios
-      .get("https://restcountries.com/v2/all")
-      .then((response) => {
-        startTransition(() => {
-          dispatch({ type: "FETCH_SUCCESS", data: response.data })
-        })
-      })
-      .catch((error) => {
-        dispatch({ type: "FETCH_ERROR", payload: error.message })
-      })
-  }, [])
+  const { state } = useContext(AppContext)
 
   return (
     <React.Fragment>
       <Main>
-        <Form state={state} dispatch={dispatch} />
-        {state.isLoading && <H1>Connecting to server</H1>}
-        {isPending ? (
-          <H2>Fetching data...</H2>
-        ) : state.hasError ? (
-          <H1>Error occured while fetching data. {state.errorMessage}</H1>
-        ) : (
-          <Card state={state} dispatch={dispatch} />
-        )}
+        <Form />
+        {state.isLoading && <h1>Fetching data...</h1>}
+        {state.hasError ? <Error state={state} /> : <Card />}
       </Main>
     </React.Fragment>
   )

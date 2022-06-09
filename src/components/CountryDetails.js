@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { Main, Button, Span } from "./styles/CountryDetails/CountryDetails"
 import Details from "./Details"
+import Error from "./Error"
 
 const initialState = {
   isLoading: true,
@@ -56,7 +57,13 @@ const CountryDetails = () => {
         <Button onClick={() => navigate(-1)}>
           <Span className="fa-solid fa-arrow-left-long"></Span> Back
         </Button>
-        <Details state={state} />
+        {state.isLoading ? (
+          <h1>Fetching data...</h1>
+        ) : state.hasError ? (
+          <Error state={state} />
+        ) : (
+          <Details state={state} />
+        )}
       </Main>
     </React.Fragment>
   )

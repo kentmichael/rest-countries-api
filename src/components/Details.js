@@ -1,22 +1,31 @@
-import React from "react"
+import React, { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { AppContext } from "../App"
 import {
   Section,
-  Image,
   Div,
+  Image,
+  Div1,
   H1,
   Ul,
   Ul1,
   Ul2,
   Span1,
-  Div1,
+  Div2,
   H2,
   Ul3,
+  Button,
 } from "./styles/Details/Details"
+
+const filterBorderCountry = (countryList, borders) => {
+  return countryList.filter((country) => borders.includes(country.alpha3Code))
+}
 
 const Details = (props) => {
   const {
     name,
     nativeName,
+    flag,
     population,
     region,
     subregion,
@@ -26,12 +35,23 @@ const Details = (props) => {
     languages,
     borders,
   } = props.state.countryInfo
+  const { state } = useContext(AppContext)
+  const navigate = useNavigate()
+
+  const viewBorderCountry = (countryName) => {
+    navigate(`/country-details/${countryName}`)
+  }
+
+  const filteredBorders =
+    borders && filterBorderCountry(state.countryList, borders)
 
   return (
     <Section>
-      <pre>{JSON.stringify(props.state.countryInfo, null, 2)}</pre>
-      <Image src="" alt="" />
       <Div>
+        <Image src={flag} alt={`${name} flag`} />
+      </Div>
+
+      <Div1>
         <H1>{name}</H1>
         <Ul>
           <li>
@@ -70,16 +90,18 @@ const Details = (props) => {
             </Ul2>
           </li>
         </Ul>
-      </Div>
-      <Div1>
-        <H2>Border Countries: </H2>
-        <Ul3>
-          {borders?.map((borderCountry, idx) => (
-            <li key={idx}>
-              <button>{borderCountry}</button>
-            </li>
-          ))}
-        </Ul3>
+        <Div2>
+          <H2>Border Countries: </H2>
+          <Ul3>
+            {filteredBorders?.map((country, idx) => (
+              <li key={idx}>
+                <Button onClick={() => viewBorderCountry(country.name)}>
+                  {country.name}
+                </Button>
+              </li>
+            ))}
+          </Ul3>
+        </Div2>
       </Div1>
     </Section>
   )

@@ -23,6 +23,13 @@ export const Button = styled.button`
   color: var(--theme-text);
   cursor: pointer;
   box-shadow: 0.06rem 0.06rem 0.5rem hsla(0, 0%, 20%, 0.2);
+
+  @media (min-width: 71.88em) {
+    margin-bottom: 4.86rem;
+    padding-block: 0.63rem;
+    padding-inline: 2rem;
+    font-size: 1rem;
+  }
 `
 
 export const Span = styled.span`

@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useContext } from "react"
+import { AppContext } from "../App"
 import {
   StyledForm,
   Label,
@@ -10,9 +11,9 @@ import {
   Option,
 } from "./styles/Form/Form"
 
-const Form = (props) => {
+const Form = () => {
+  const { state, dispatch } = useContext(AppContext)
   const inputRef = useRef()
-  const { state, dispatch } = props
 
   useEffect(() => {
     inputRef.current.focus()
@@ -75,11 +76,36 @@ const Form = (props) => {
           >
             Filter by Region
           </Option>
-          <Option value="africa">Africa</Option>
-          <Option value="americas">America</Option>
-          <Option value="asia">Asia</Option>
-          <Option value="europe">Europe</Option>
-          <Option value="oceania">Oceania</Option>
+          <Option
+            value="africa"
+            hidden={state.filterOption === "africa" ? true : false}
+          >
+            Africa
+          </Option>
+          <Option
+            value="americas"
+            hidden={state.filterOption === "americas" ? true : false}
+          >
+            America
+          </Option>
+          <Option
+            value="asia"
+            hidden={state.filterOption === "asia" ? true : false}
+          >
+            Asia
+          </Option>
+          <Option
+            value="europe"
+            hidden={state.filterOption === "europe" ? true : false}
+          >
+            Europe
+          </Option>
+          <Option
+            value="oceania"
+            hidden={state.filterOption === "oceania" ? true : false}
+          >
+            Oceania
+          </Option>
         </Select>
         <Span2 className="fa-solid fa-chevron-down"></Span2>
       </Label2>

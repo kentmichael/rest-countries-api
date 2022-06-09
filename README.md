@@ -23,7 +23,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [](http://kentmichael.github.io/rest-countries-api)
+- Live Site URL: [rest-countries-api](http://kentmichael.github.io/rest-countries-api)
 
 ## My process
 

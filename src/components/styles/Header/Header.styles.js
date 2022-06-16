@@ -21,6 +21,7 @@ export const Div = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+  row-gap: 1rem;
 `
 
 export const LogoLink = styled(Link)`

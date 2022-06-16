@@ -6,7 +6,6 @@ export const Div = styled.div`
   max-width: 80rem;
   margin-inline: auto;
   margin-bottom: 8rem;
-  padding-inline: 3rem;
 
   @media (min-width: 40em) {
     grid-template-columns: repeat(2, 1fr);

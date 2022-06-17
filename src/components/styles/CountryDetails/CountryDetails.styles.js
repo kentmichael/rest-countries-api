@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Main = styled.main`
   max-width: 80rem;
   margin-bottom: 7.69rem;
-  margin-inline: 3.44rem;
+  margin-inline: 2rem;
   padding-top: 2rem;
 
   @media (min-width: 87.5em) {

@@ -12,6 +12,7 @@ import {
   H2,
   Ul3,
   Button,
+  H3,
 } from "./Details.styles"
 
 export {
@@ -28,4 +29,5 @@ export {
   H2,
   Ul3,
   Button,
+  H3,
 }

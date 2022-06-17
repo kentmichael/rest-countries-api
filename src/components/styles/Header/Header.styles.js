@@ -44,7 +44,7 @@ export const Button = styled.button`
   border: none;
   background-color: transparent;
   font-family: var(--font-family);
-  font-size: 1.19rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--theme-text);
   cursor: pointer;
@@ -55,7 +55,7 @@ export const Button = styled.button`
 `
 
 export const Span = styled.span`
-  font-size: 1.81rem;
+  font-size: 1rem;
 
   @media (min-width: 87.5em) {
     font-size: 1.06rem;

@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Section = styled.section`
   display: grid;
   gap: 5.81rem;
-  align-items: center;
+  align-items: start;
 
   @media (min-width: 71.88em) {
     grid-template-columns: repeat(2, 1fr);
@@ -126,6 +126,16 @@ export const Button = styled.button`
   color: var(--theme-text);
   box-shadow: 0.06rem 0.06rem 0.5rem hsla(0, 0%, 20%, 0.2);
   cursor: pointer;
+
+  @media (min-width: 71.88em) {
+    font-size: 0.88rem;
+  }
+`
+
+export const H3 = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--theme-text);
 
   @media (min-width: 71.88em) {
     font-size: 0.88rem;

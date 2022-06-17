@@ -1,11 +1,9 @@
 import React from "react"
 
-const Error = ({ state }) => {
+const Error = ({ error }) => {
   return (
     <React.Fragment>
-      <h1>{state.errorMessage.message}</h1>
-      <p>{state.errorMessage.code}</p>
-      <p>{state.errorMessage.config.url}</p>
+      <h1>{error}</h1>
     </React.Fragment>
   )
 }

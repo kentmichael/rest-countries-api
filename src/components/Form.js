@@ -1,5 +1,10 @@
-import React, { useRef, useEffect, useContext } from "react"
-import { AppContext } from "../App"
+import React, { useState, useRef, useEffect, useTransition } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  setSearchString,
+  setSearchResult,
+} from "../features/search/searchSlice"
+import { selectFilter, setFilterResult } from "../features/filter/filterSlice"
 import {
   StyledForm,
   Label,
@@ -12,42 +17,73 @@ import {
 } from "./styles/Form/Form"
 
 const Form = () => {
-  const { state, dispatch } = useContext(AppContext)
+  const [isPending, startTransition] = useTransition()
   const inputRef = useRef()
+  const countryList = useSelector((state) => state.countries.countryList)
+  const { searchString, searchResult } = useSelector((state) => state.search)
+  const { filterOption, filterResult } = useSelector((state) => state.filter)
+  const [input, setInput] = useState(searchString)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     inputRef.current.focus()
   }, [])
 
+  useEffect(() => {
+    dispatch(setSearchResult(searchList(searchString)))
+  }, [searchString])
+
+  useEffect(() => {
+    dispatch(setFilterResult(filterList(filterOption)))
+  }, [filterOption])
+
   const handleOnChange = (event) => {
-    dispatch({
-      type: event.target.name,
-      payload: event.target.value,
-      data:
-        event.target.name === "filterOption"
-          ? filterList(event.target.value)
-          : searchList(event.target.value),
-    })
+    if (event.target.name === "searchString") {
+      setInput(event.target.value)
+      startTransition(() => {
+        dispatch(setSearchString(event.target.value))
+      })
+    } else {
+      dispatch(selectFilter(event.target.value))
+    }
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
   }
 
-  const filterList = (keyword) => {
-    if (keyword === "all") return ""
+  const searchList = (keyword) => {
+    if (!keyword) return []
+    const list = filterResult.length ? filterResult : countryList
 
-    return state.countryList.filter(
-      (countryObj) => countryObj.region.toUpperCase() === keyword.toUpperCase()
+    return list.filter((country) =>
+      country.name.toUpperCase().includes(keyword.toUpperCase())
     )
   }
 
-  const searchList = (query) => {
-    if (!query) return ""
-    const list = state.filterResult ? state.filterResult : state.countryList
+  const filterList = (option) => {
+    const list = searchResult.length ? searchResult : countryList
 
-    return list.filter((countryObj) =>
-      countryObj.name.toUpperCase().includes(query.toUpperCase())
+    const filteredList = list.filter(
+      (country) => country.region.toUpperCase() === option.toUpperCase()
+    )
+
+    const edgeCaseList = list.length
+      ? filteredList.length
+        ? filteredList
+        : countryList
+      : countryList
+
+    if (searchString.length)
+      dispatch(setSearchResult(searchFilterList(searchString, edgeCaseList)))
+
+    return filteredList
+  }
+
+  const searchFilterList = (keyword, list) => {
+    return list.filter((country) =>
+      country.name.toUpperCase().includes(keyword.toUpperCase())
     )
   }
 
@@ -58,51 +94,45 @@ const Form = () => {
         <Input
           type="search"
           ref={inputRef}
-          name="queryString"
-          value={state.queryString}
+          name="searchString"
+          value={input}
           onChange={handleOnChange}
           placeholder="Search for a country..."
         />
       </Label>
       <Label2>
         <Select
-          value={state.filterOption}
+          value={filterOption}
           name="filterOption"
           onChange={handleOnChange}
         >
-          <Option
-            value="all"
-            hidden={state.filterOption === "all" ? true : false}
-          >
+          <Option value="all" hidden={filterOption === "all" ? true : false}>
             Filter by Region
           </Option>
           <Option
             value="africa"
-            hidden={state.filterOption === "africa" ? true : false}
+            hidden={filterOption === "africa" ? true : false}
           >
             Africa
           </Option>
           <Option
             value="americas"
-            hidden={state.filterOption === "americas" ? true : false}
+            hidden={filterOption === "americas" ? true : false}
           >
             America
           </Option>
-          <Option
-            value="asia"
-            hidden={state.filterOption === "asia" ? true : false}
-          >
+          <Option value="asia" hidden={filterOption === "asia" ? true : false}>
             Asia
           </Option>
           <Option
             value="europe"
-            hidden={state.filterOption === "europe" ? true : false}
+            hidden={filterOption === "europe" ? true : false}
           >
             Europe
           </Option>
           <Option
             value="oceania"
-            hidden={state.filterOption === "oceania" ? true : false}
+            hidden={filterOption === "oceania" ? true : false}
           >
             Oceania
           </Option>
